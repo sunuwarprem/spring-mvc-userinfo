@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class userController {
+public class UserController {
 
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder){

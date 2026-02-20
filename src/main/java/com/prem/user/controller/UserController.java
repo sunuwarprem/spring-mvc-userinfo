@@ -1,6 +1,7 @@
 package com.prem.user.controller;
 
 import com.prem.user.model.User;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -27,19 +28,18 @@ public class UserController {
     }
 
     @RequestMapping(value ="submitForm", method = RequestMethod.POST)
-    public ModelAndView submitForm(@ModelAttribute User user, BindingResult bindingResult){
+    public ModelAndView submitForm( @Valid @ModelAttribute User user, BindingResult bindingResult){
 
         ModelAndView view=new ModelAndView("userDetails");
         if(bindingResult.hasErrors()){
-            return new ModelAndView("userRegistrationForm");
+            return new ModelAndView("userForm");
         }
-        view.addObject("firstName", user.getFirstName());
-        view.addObject("lastName", user.getLastName());
-        view.addObject("mobileNum", user.getMobileNum());
-        view.addObject("dateOfBirth", user.getDob());
-        view.addObject("streetName", user.getAddress().getStreetName());
-        view.addObject("cityName", user.getAddress().getCityName());
-        view.addObject("countryName", user.getAddress().getCountryName());
+        /*if(bindingResult.hasErrors()){
+            // IMPORTANT: Pass the user object back so errors can be displayed
+            ModelAndView errorView = new ModelAndView("userForm");
+            errorView.addObject("user", user);  // Add this line!
+            return errorView;
+        }*/
         return view;
     }
 }

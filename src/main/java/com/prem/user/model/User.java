@@ -1,5 +1,7 @@
 package com.prem.user.model;
 
+import com.prem.user.anotations.IsValidate;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -7,14 +9,29 @@ import java.util.List;
 
 public class User {
 
+    @Pattern(regexp="[^0-9]*")
     private String firstName;
+    @Pattern(regexp="[^0-9]*")
     private String lastName;
+    @Max(999999999)
+    @Min(9999)
     private Long mobileNum;
+    @IsValidate
+    private String userInterest;
 
+    @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
     private List<String> skills;
     private Address address;
+
+    public String getUserInterest() {
+        return userInterest;
+    }
+
+    public void setUserInterest(String userInterest) {
+        this.userInterest = userInterest;
+    }
 
     public Address getAddress() {
         return address;

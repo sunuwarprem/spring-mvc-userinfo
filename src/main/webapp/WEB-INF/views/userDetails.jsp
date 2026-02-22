@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +12,15 @@
 
 </head>
 <body>
+
   <div class="container">
+  <h1>
+     <c:if test="${not empty saveMsg}">
+          <p style="color: red;">${saveMsg}</p>
+      </c:if>
+  </h1>
     <h2>Submitted Details</h2>
     <h2>${mainMsg}</h2>
-
     <table>
       <thead>
         <tr>
@@ -28,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        <c:forEach var="user" items="${users}">
+        <c:forEach items="${users}" var="user" >
           <tr>
             <td>${user.firstName}</td>
             <td>${user.lastName}</td>

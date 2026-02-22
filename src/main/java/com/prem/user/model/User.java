@@ -5,7 +5,6 @@ import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.List;
 
 public class User {
 
@@ -18,12 +17,21 @@ public class User {
     private Long mobileNum;
     @IsValidate
     private String userInterest;
+    private int id;
 
     @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
-    private List<String> skills;
+    private String skills;
     private Address address;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUserInterest() {
         return userInterest;
@@ -73,11 +81,11 @@ public class User {
         this.dob = dob;
     }
 
-    public List<String> getSkills() {
+    public String getSkills() {
         return skills;
     }
 
-    public void setSkills(List<String> skills) {
+    public void setSkills(String skills) {
         this.skills = skills;
     }
 }

@@ -24,4 +24,15 @@
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basename" value="classpath:usermessage"/>
     </bean>
+
+    <bean id="userDao" class="com.prem.user.dao.UserDaoImp"/>
+    <bean id="userService" class="com.prem.user.service.UserServiceImp"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/spring_jdbc_cruddb"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+
+    </bean>
 </beans>

@@ -10,9 +10,9 @@ public class DayOfWeekBased implements HandlerInterceptor {
     public boolean preHandle(jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response, Object handler) throws Exception {
         Calendar cal=Calendar.getInstance();
         int daysOfWeek=cal.get(Calendar.DAY_OF_WEEK);
-        if(daysOfWeek==6){
+        if(daysOfWeek==1){
             response.getWriter().write("""
-                    the site is closed on Friday, please enter next day.
+                    the site is closed on Sunday, please enter next day.
                     """);
             return false;
         }return  true;

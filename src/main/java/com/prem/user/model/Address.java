@@ -5,6 +5,15 @@ public class Address extends User{
     private String streetName;
     private String cityName;
     private String countryName;
+    int userid;
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
 
     public String getStreetName() {
         return streetName;

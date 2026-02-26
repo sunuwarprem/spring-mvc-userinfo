@@ -114,4 +114,18 @@ td a button:active {
     transform: translateY(0px);
     box-shadow: 0 2px 5px rgba(102, 126, 234, 0.4);
 }
+.Sign-Out button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+}
+
+.Sign-Out button:hover {
+    background-color: #c0392b;
+}
 .back-btn:hover { background: #357abd; }

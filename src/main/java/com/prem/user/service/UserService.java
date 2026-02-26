@@ -14,4 +14,6 @@ public interface UserService {
     void deleteUser(int id);
 
     User getUserById(int userId, int addressId);
+
+    public User loginUser(String firstName, String lastName);
 }

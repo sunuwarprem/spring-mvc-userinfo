@@ -37,5 +37,8 @@ public class SqlQuery {
     public static final String DELETE_USER_BY_ID= """
        delete from usertbl where id=?
     """;
+    public static final String LOGIN_SQL= """
+       SELECT * FROM usertbl WHERE firstName = ? AND lastName = ?
+       """;
 
 }

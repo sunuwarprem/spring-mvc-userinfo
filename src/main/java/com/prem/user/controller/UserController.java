@@ -2,6 +2,7 @@ package com.prem.user.controller;
 
 import com.prem.user.model.User;
 import com.prem.user.service.UserServiceImp;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,8 +66,11 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/","user_list"}, method = RequestMethod.GET)
-    public String list(Model model) {
+    public String list(Model model, HttpSession session) {
         List<User> users = userServiceImp.getAllUsers();
+        if (session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("users", users);
         return "userDetails";
     }
@@ -86,12 +90,22 @@ public class UserController {
         userServiceImp.deleteUser(id);
         return "redirect:/user_list";
     }
-
-
-
-
-
-
-
-
+    @RequestMapping(value = {"login"}, method = RequestMethod.POST)
+    public String login(@ModelAttribute User user , @RequestParam("firstname") String username,
+                                                    @RequestParam("lastname") String lastname, Model model,
+                                                     HttpSession session)
+    {
+        ModelAndView view=new ModelAndView("login");
+       userServiceImp.loginUser(username, lastname);
+        session.setAttribute("loggedInUser", username);
+        model.addAttribute("mainMsg", "login success");
+        return "redirect:/user_list";
+    }
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String loginForm(HttpSession session) {
+        session.invalidate();
+        return "login";
+    }
 }
+
+

@@ -59,6 +59,7 @@
     </table>
   <div>
   <a href="add_user" class="Add-Users"><button> Add-User </button></a>
+  <a href="login" class="Add-Users"><button>Sign-out </button></a>
   </div>
 </body>
 </html>

@@ -106,6 +106,12 @@ public class UserDaoImp implements UserDao{
         return user;
     }
 
+    @Override
+    public User loginUser(String firstName, String lastName) {
+        List<User> users=getJdbcTemplate().query(LOGIN_SQL, new UserRowMapper(), firstName, lastName);
+        return users.isEmpty() ? null : users.getFirst();
+    }
+
     private User getUserId(int userId){
         List<User> users=getJdbcTemplate().query(GET_BY_USERID, new UserRowMapper(), userId);
         if(!users.isEmpty()){

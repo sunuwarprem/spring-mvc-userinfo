@@ -31,6 +31,7 @@
           <th>User Interest</th>
           <th>Address</th>
           <th>Skills</th>
+          <th>Action</th>  <%-- ✅ add this --%>
         </tr>
       </thead>
       <tbody>
@@ -43,12 +44,21 @@
             <td>${user.userInterest}</td>
             <td>${user.address.streetName}, ${user.address.cityName}, ${user.address.countryName}</td>
             <td>${user.skills}</td>
+            <td>
+                    <%-- ✅ passes user.id to the update GET method --%>
+                    <a href="/user_edit?userId=${user.id}&addressId=${user.address.id}">
+                      <button type="button">Edit</button>
+                    </a>||
+                     <a href="/delete?id=${user.id}">
+                      <button type="button">Delete</button>
+                     </a>
+            </td>
           </tr>
         </c:forEach>
       </tbody>
     </table>
-
-    <a href="/" class="back-btn">Back</a>
+  <div>
+  <a href="add_user" class="Add-Users"><button> Add-User </button></a>
   </div>
 </body>
 </html>

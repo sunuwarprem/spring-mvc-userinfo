@@ -55,8 +55,6 @@ public class UserDaoImp implements UserDao{
            int userId =  keyHolder.getKey().intValue();  // ✅ returns the generated user_id
         Address address= user.getAddress();
         getJdbcTemplate().update(SAVE_ADDRESS,userId, address.getStreetName(), address.getCityName(), address.getCountryName());
-
-
     }
 
     @Override
@@ -69,6 +67,59 @@ public class UserDaoImp implements UserDao{
             }
         }
         return users;
+    }
+
+    @Override
+    public void updateUsersById(int userId, User user) {
+        getJdbcTemplate().update(UPDATE_BY_USERID,
+                user.getFirstName(),
+                user.getLastName(),
+                new Date(user.getDob().getTime()),
+                user.getUserInterest(),
+                user.getMobileNum(),
+                user.getSkills(),
+                userId
+        );
+        getJdbcTemplate().update(UPDATE_ADDRESS_BY_ID,
+                user.getAddress().getStreetName(),
+                user.getAddress().getCityName(),
+                user.getAddress().getCountryName(),
+                user.getAddress().getId()
+        );
+
+    }
+
+
+    @Override
+    public void deleteUser(int id) {
+        getJdbcTemplate().update(DELETE_USER_BY_ID, id);
+        getJdbcTemplate().update(DELETE_ADDRESS_BY_ID, id);
+    }
+
+    @Override
+    public User getUserById(int userId, int addressId) {
+        User user=getUserId(userId);
+        if(user!=null){
+            Address address=getAddressId(addressId);
+            user.setAddress(address);
+        }
+        return user;
+    }
+
+    private User getUserId(int userId){
+        List<User> users=getJdbcTemplate().query(GET_BY_USERID, new UserRowMapper(), userId);
+        if(!users.isEmpty()){
+            return users.getFirst();
+        }
+        return null;
+    }
+
+    private Address getAddressId(int addressId){
+        List<Address> addresses=getJdbcTemplate().query(GET_ADDRESS_BY_ID, new AddressRowMapper(), addressId);
+        if(!addresses.isEmpty()){
+           return addresses.getFirst();
+        }
+        return null;
     }
 
 }

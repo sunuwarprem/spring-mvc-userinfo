@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -30,14 +27,20 @@ public class UserController {
 
     }
 
-    @RequestMapping("/")
-    public ModelAndView openForm() {
+    @RequestMapping("add_user")
+    public ModelAndView addUserForm() {
         // return new ModelAndView("userRegistrationForm");
         return new ModelAndView("userForm");
     }
+    @RequestMapping("user_edit")
+    public ModelAndView userEditForm(Model model,@RequestParam("userId") int userId, @RequestParam("addressId") int addressId){
+        User user= userServiceImp.getUserById(userId,addressId);
+        model.addAttribute("user", user);
+        return new ModelAndView("userEdit");
+    }
 
     @RequestMapping(value = "submitForm", method = RequestMethod.POST)
-    public ModelAndView submitForm(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+    public ModelAndView saveUsers(@Valid @ModelAttribute User user, BindingResult bindingResult) {
 
         ModelAndView view = new ModelAndView("userDetails");
         if (bindingResult.hasErrors()) {
@@ -53,16 +56,42 @@ public class UserController {
             userServiceImp.save(user);
             view.addObject("saveMsg", "User saved in DB");
             System.out.println("saved in DB");
+            List<User> users=userServiceImp.getAllUsers();
+            view.addObject("users", users);
         } catch (Exception e) {
             view.addObject("saveMsg", "Failed to save user: " + e.getMessage());
         }
         return view;
     }
 
-    @RequestMapping(value = {"/", "user_list"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/","user_list"}, method = RequestMethod.GET)
     public String list(Model model) {
         List<User> users = userServiceImp.getAllUsers();
         model.addAttribute("users", users);
         return "userDetails";
     }
+
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public String updateUsers(@Valid @ModelAttribute User user, @RequestParam("id") int userId, BindingResult bindingResult) {
+        ModelAndView view = new ModelAndView("userEdit");
+        if (bindingResult.hasErrors()) {
+            return "userEdit";
+        }
+        userServiceImp.updateUsersById(userId, user);
+        return "redirect:/user_list";
+    }
+    @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
+    public String deleteUser(@ModelAttribute User user , @RequestParam("id") int id){
+        ModelAndView view=new ModelAndView("userEdit");
+        userServiceImp.deleteUser(id);
+        return "redirect:/user_list";
+    }
+
+
+
+
+
+
+
+
 }

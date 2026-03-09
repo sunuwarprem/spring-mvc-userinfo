@@ -27,7 +27,6 @@ public class UserController {
         // webDataBinder.setDisallowedFields(new String[] {"skills"});
 
     }
-
     @RequestMapping("add_user")
     public ModelAndView addUserForm() {
         // return new ModelAndView("userRegistrationForm");
@@ -56,7 +55,7 @@ public class UserController {
         try {
             userServiceImp.save(user);
             view.addObject("saveMsg", "User saved in DB");
-            System.out.println("saved in DB");
+            //System.out.println("saved in DB");
             List<User> users=userServiceImp.getAllUsers();
             view.addObject("users", users);
         } catch (Exception e) {
